@@ -1,0 +1,153 @@
+# -*- mode: org; fill-column: 79; -*-
+
+#+TITLE: Notes From: /Learning React/
+#+SUBTITLE: A Hands-On Guide to Building Web Applications Using React and Redux
+#+AUTHOR: Kirupa Chinnathambi
+#+MACRO: VERSION 0.0.1
+#+MACRO: EDITION 0.1
+
+#+texinfo: @insertcopying
+
+* First React App
+  #+cindex: first steps
+  #+cindex: React, first
+  #+cindex: convert JSX into JS
+  #+cindex: transpile JSX into JS
+  #+cindex: JavaScript from JSX
+  To build a web app using React, you need a way to convert JSX into JavaScript
+  that the browser can understand.  There are two mutually exclusive ways this
+  can be done:
+
+     #+cindex: development environment using Node
+  1. Set up a development environment around Node and a handful of
+     build-tools.  In this environment, every time you perform a build, all of
+     your JSX is automatically converted into JavaScript and placed on disk for
+     you to reference like any plain JavaScript file.
+     #+cindex: transpile JSX using script, page load
+     #+cindex: script, transpile JSX
+  2. Let your browser automatically convert JSX to JavaScript at runtime.  You
+     specify your JSX directly, just as you would any old piece of JavaScript,
+     and your browser takes care of the rest.
+
+
+  #+cindex: modern web development
+  The first solution, while a bit complicated and time-consuming at first, is
+  the /way/ modern web development is done these days.  Besides transpiling
+  your JSX to JavaScript (JS), thos approach enables you to take advantage of
+  modules, better build tools, and a bunch of features that make building
+  complex web apps somewhat manageable.
+
+  #+cindex: script file, transpile JSX
+  #+cindex: transpile JSX, script
+  The second solution provides a quick and direct path in which you initially
+  spend more time writing code and less time fiddling with your development
+  environment.  To use this solution, all you do is reference a script file.
+  This script file takes care of turning your JSX into JS on page load, and
+  your React app comes to life without you having to do anything special to
+  your development environment.
+
+  This section will use the second method, which makes learning React easier
+  without having to deal with a development environment.  The first method
+  should be used when making a production-ready product, however.
+
+** Getting React to Work Using Scripts
+   #+cindex: template, React scripts
+   #+cindex: HTML template, scripts
+   #+cindex: Babel, script, JSX transpiler
+   #+cindex: UNPKG service
+   #+cindex: npm web site
+   Start with a blank HTML page with script calls to the React framework and
+   the Babel transpiler.  These scripts are contained on the [[https://unpkg.com/][UNPKG]] web site,
+   which ``is a fast, global content deliver network for everything on [[https://www.npmjs.com/][npm]].
+   Use it to quickly and easily load any file from any package using a URL
+   like:''
+   : unpkg.com/:package@:version/:file
+
+   #+cindex: ReactDOM library
+   #+cindex: React library
+   #+cindex: library, React and ReactDOM
+   #+cindex: Babel library
+   #+cindex: library, Babel
+   Add three scripts below the title, one for the ~React-Dom~ library, another
+   for ~React~ library, and a third for the [[https://babeljs.io/][Babel JSX to JavaScript transpiler]]:
+
+   - ~<script src="https://unpkg.com/react@16/umd/react.development.js"></script>~
+   - ~<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>~
+   - ~<script src="https://unpkg.com/babel-standalone@6.15.0/bable.min,.js"></script>~
+
+
+   {{{heading(React Container)}}}
+   #+cindex: container element
+   The template will need a container in which to place the React output.  The
+   React output should not be placed directly inside the body.  Therefore,
+   create a ~<div>~ element and give it a unique id.  Then create a variable
+   that references that id, and place the variable into the ~ReactDOM.render()~
+   method call as the second argument.
+   : var container = document.querySelector("#container")
+   : <div id="container"></div>
+
+   {{{heading(ReactDOM.render())}}}
+   #+cindex: ~ReactDOM.render~
+   #+cindex: ~text/babel~ type
+   #+cindex: type="text/babel"
+   The final element to add to produce some React output is a call to the
+   ~render~ method of the ~ReactDOM~ library, placed between ~<script>~ tags in
+   the body.  Note that the ~<script>~ tag must be typed as ~text/babel~ to
+   allow the Babel transpiler to locate it.  The first argument to the ~render~
+   method is the content to display, while the second argument is the DOM
+   location at which the content is to be displayed (render).
+
+   #+cindex: HTML template
+   #+cindex: template, HTML
+   #+name: react-html-template
+   #+caption: React HTML Template
+   #+begin_src html -n :tangle index.html
+     <!DOCTYPE html>
+     <html>
+
+       <head>
+         <meta charset="utf-8">
+         <title>React</title>
+
+         <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+         <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+         <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+       </head>
+
+       <body>
+         <div id="container"></div>
+         <script type="text/babel">
+           var destination = document.querySelector("#container");
+           ReactDOM.render(
+             <h1>Hello World! From React</h1>,
+             destination
+           );
+         </script>
+       </body>
+
+     </html>
+   #+end_src
+* Copying
+  :PROPERTIES:
+  :Copying:  t
+  :END:
+  \copy {{{date}}}{{{NL}}}
+  {{{title}}} {{{NL}}} Version: {{{VERSION}}} Edition: {{{EDITION}}} {{{NL}}}
+  Last Modification Date: {{{time(%F %R)}}}
+* Index
+  :PROPERTIES:
+  :Index:    cp
+  :END:
+* Export Settings                                                  :noexport:
+#+TEXINFO_CLASS: info
+#+TEXINFO_HEADER:
+#+TEXINFO_POST_HEADER:
+#+TEXINFO_DIR_CATEGORY: WebDev
+#+TEXINFO_DIR_TITLE: Learning React
+#+TEXINFO_DIR_DESC: Pearson Addison-Wesley edition for learning React
+#+TEXINFO_PRINTED_TITLE: Notes From: @slanted{Learning React}
+#+DATE: 2018
+* Macro Definitions                                                :noexport:
+#+MACRO: heading @@texinfo:@heading @@$1
+#+MACRO: subheading @@texinfo:@subheading @@$1
+#+MACRO: NL @@texinfo:@*@@
